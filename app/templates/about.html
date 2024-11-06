@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="contact-container container py-5">
+    <!-- En-tête -->
+    <header class="contact-header text-center mb-5">
+        <h1 class="gradient-title">Contactez-nous</h1>
+        <p class="subtitle">Notre équipe est à votre disposition pour vous accompagner</p>
+        <div class="gradient-bar mx-auto"></div>
+    </header>
+
+    <div class="row g-4">
+        <!-- Email -->
+        <div class="col-lg-4 fade-up">
+            <div class="contact-card">
+                <div class="icon-title">
+                    <i class="far fa-envelope"></i>
+                    <h2>Email</h2>
+                </div>
+
+                <div class="content-block">
+                    <i class="far fa-envelope"></i>
+                    <h3>Email Principal</h3>
+                    <a href="mailto:contact@koutchoumianalytics.com">
+                        contact@koutchoumianalytics.com
+                    </a>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="content-block">
+                    <i class="far fa-envelope"></i>
+                    <h3>Support Technique</h3>
+                    <a href="mailto:support@koutchoumianalytics.com">
+                        support@koutchoumianalytics.com
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Téléphones -->
+        <div class="col-lg-4 fade-up" style="animation-delay: 0.2s">
+            <div class="contact-card">
+                <div class="icon-title">
+                    <i class="far fa-phone"></i>
+                    <h2>Téléphones</h2>
+                </div>
+
+                <div class="phone-list">
+                    <div class="phone-item">
+                        <i class="far fa-phone"></i>
+                        <a href="tel:+237699999999">+237 699 999 999</a>
+                    </div>
+                    <div class="phone-item">
+                        <i class="far fa-phone"></i>
+                        <a href="tel:+237677777777">+237 677 777 777</a>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="schedule-block">
+                    <div class="schedule-header">
+                        <i class="far fa-clock"></i>
+                        <h3>Horaires</h3>
+                    </div>
+                    <div class="schedule-times">
+                        <span>Lun-Ven: 08:00-18:00</span>
+                        <span>Sam: 09:00-15:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bureaux -->
+        <div class="col-lg-4 fade-up" style="animation-delay: 0.4s">
+            <div class="contact-card">
+                <div class="icon-title">
+                    <i class="far fa-building"></i>
+                    <h2>Nos bureaux</h2>
+                </div>
+
+                <div class="content-block">
+                    <i class="far fa-building"></i>
+                    <h3>Bureau de Yaoundé</h3>
+                    <span>Quartier X, Avenue Y</span>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="content-block">
+                    <i class="far fa-building"></i>
+                    <h3>Bureau de Douala</h3>
+                    <span>Quartier A, Boulevard B</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

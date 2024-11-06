@@ -1,0 +1,109 @@
+<!-- templates/partials/_recommendation_results.html -->
+{% if recommendations %}
+<div class="recommendations-section mt-4">
+    <div class="alert alert-success">
+        <i class="fas fa-check-circle me-2"></i>{{ recommendations.message }}
+    </div>
+
+    <div class="row g-4">
+        {% for apt in recommendations.recommendations %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 apartment-card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">{{ apt.titre }}</h5>
+                    
+                    <!-- Informations principales -->
+                    <div class="info-grid mb-3">
+                        <div class="info-item">
+                            <i class="fas fa-money-bill text-primary"></i>
+                            <span>{{ apt.prix }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            <span>{{ apt.quartier }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-bed text-primary"></i>
+                            <span>{{ apt.nb_chambres }}</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-eye text-primary"></i>
+                            <span>{{ apt.popularite }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Points forts -->
+                    {% if apt.points_forts %}
+                    <div class="points-section">
+                        <h6 class="points-title">
+                            <i class="fas fa-star text-warning me-2"></i>Points forts
+                        </h6>
+                        <ul class="points-list">
+                            {% for point in apt.points_forts %}
+                            <li>
+                                <i class="fas fa-check text-success"></i>
+                                {{ point }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- Points d'attention -->
+                    {% if apt.points_attention %}
+                    <div class="points-section">
+                        <h6 class="points-title">
+                            <i class="fas fa-exclamation-triangle text-warning me-2"></i>Points d'attention
+                        </h6>
+                        <ul class="points-list">
+                            {% for point in apt.points_attention %}
+                            <li>
+                                <i class="fas fa-exclamation text-warning"></i>
+                                {{ point }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- Score -->
+                    <div class="matching-score">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Score de correspondance</span>
+                            <span class="score-badge">{{ apt.score }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Résumé -->
+    <div class="summary-section mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Résumé de la recherche</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Ville:</strong> {{ recommendations.summary.ville }}</p>
+                        <p><strong>Quartier:</strong> {{ recommendations.summary.quartier }}</p>
+                        <p><strong>Budget max:</strong> {{ recommendations.summary.budget_max }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Nombre de personnes:</strong> {{ recommendations.summary.nb_personnes }}</p>
+                        <p><strong>Chambres minimum:</strong> {{ recommendations.summary.chambres_min }}</p>
+                        <p><strong>Appartements trouvés:</strong> {{ recommendations.summary.total_results }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if recommendations and recommendations.status == 'error' %}
+<div class="alert alert-danger mt-4">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ recommendations.message }}
+</div>
+{% endif %}

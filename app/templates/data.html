@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block title %}Data - Koutchoumi Analytics{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Navigation Pills -->
+    <div class="nav-pills-container">
+        <div class="card">
+            <div class="card-body p-4">
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="recommendation-tab" data-bs-toggle="pill" href="#recommendation" role="tab">
+                            <i class="fas fa-search me-2"></i>Recommandation
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="classification-tab" data-bs-toggle="pill" href="#classification" role="tab">
+                            <i class="fas fa-chart-pie me-2"></i>Classification
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu des onglets -->
+    <div class="tab-content">
+        <!-- Onglet Recommandation -->
+        <div class="tab-pane fade show active" id="recommendation" role="tabpanel">
+            <!-- Formulaire de recherche -->
+            <div class="card recommendation-form">
+                <div class="card-body p-4">
+                    <h2 class="gradient-title text-center">Trouvez votre appartement idéal</h2>
+                    <div class="hero-gradient-bar"></div>
+
+                    <form id="recommendationForm" method="POST" action="{{ url_for('main.data') }}">
+                        <div class="form-grid">
+                            <!-- Ville -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-city me-2"></i>Ville
+                                </label>
+                                <select name="city" class="form-select" required>
+                                    <option value="" selected disabled>Sélectionnez une ville</option>
+                                    <option value="Yaoundé">Yaoundé</option>
+                                    <option value="Douala">Douala</option>
+                                </select>
+                            </div>
+                    
+                            <!-- Tranche salariale -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-money-bill-wave me-2"></i>Tranche salariale
+                                </label>
+                                <select name="salary_range" class="form-select" required>
+                                    <option value="" selected disabled>Sélectionnez votre tranche</option>
+                                    <option value="50.000 - 150.000 FCFA">50.000 - 150.000 FCFA</option>
+                                    <option value="150.000 - 300.000 FCFA">150.000 - 300.000 FCFA</option>
+                                    <option value="300.000 - 500.000 FCFA">300.000 - 500.000 FCFA</option>
+                                    <option value="500.000 - 800.000 FCFA">500.000 - 800.000 FCFA</option>
+                                    <option value="800.000 - 1.500.000 FCFA">800.000 - 1.500.000 FCFA</option>
+                                    <option value="Plus de 1.500.000 FCFA">Plus de 1.500.000 FCFA</option>
+                                </select>
+                            </div>
+                    
+                            <!-- Quartier souhaité -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Quartier souhaité
+                                </label>
+                                <input type="text" name="location" class="form-control" 
+                                       placeholder="Ex: Odza" required>
+                            </div>
+                    
+                            <!-- Nombre d'occupants -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-users me-2"></i>Nombre d'occupants
+                                </label>
+                                <input type="number" name="num_occupants" class="form-control" 
+                                       min="1" required>
+                            </div>
+                        </div>
+                    
+                        <div class="text-center mt-4">
+                            <button type="submit" class="search-button">
+                                <i class="fas fa-search me-2"></i>Trouver mon appartement idéal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Résultats -->
+            {% if recommendations %}
+            <div class="recommendations-section mt-4">
+                {% if recommendations.status == 'success' %}
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle me-2"></i>{{ recommendations.message }}
+                </div>
+                
+                <div class="recommendations-grid">
+                    {% for apt in recommendations.recommendations %}
+                    <div class="apartment-card">
+                        <div class="apartment-header">
+                            <h3 class="apartment-title">{{ apt.titre }}</h3>
+                            <div class="apartment-price">{{ apt.prix }}</div>
+                        </div>
+                        
+                        <div class="apartment-info">
+                            <div class="info-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ apt.quartier }}, {{ apt.ville }}
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-bed"></i>
+                                {{ apt.nb_chambres }}
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-eye"></i>
+                                {{ apt.popularite }} 
+                            </div>
+                        </div>
+
+                        {% if apt.points_forts %}
+                        <div class="points-section">
+                            <div class="points-title">
+                                <i class="fas fa-star text-warning"></i>Points forts
+                            </div>
+                            <ul class="points-list">
+                                {% for point in apt.points_forts %}
+                                <li><i class="fas fa-check text-success"></i>{{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        {% if apt.points_attention %}
+                        <div class="points-section">
+                            <div class="points-title">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>Points d'attention
+                            </div>
+                            <ul class="points-list">
+                                {% for point in apt.points_attention %}
+                                <li><i class="fas fa-exclamation text-warning"></i>{{ point }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+
+                        <div class="score-section">
+                            <span>Score de correspondance</span>
+                            <span class="score-value">{{ apt.score }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>{{ recommendations.message }}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Onglet Classification -->
+        <div class="tab-pane fade" id="classification" role="tabpanel">
+            <div class="classification-section">
+                <h2 class="gradient-title">Classification des Appartements</h2>
+                <div class="hero-gradient-bar"></div>
+
+                <div class="categories-wrapper">
+                    {% if classification_results %}
+                    <!-- Luxueux -->
+                    <div class="category-box luxury">
+                        <h3 class="category-title">Luxueux</h3>
+                        <p class="price-range">>1,500,000 FCFA</p>
+                        
+                        <div class="apartments-list">
+                            {% for apt in classification_results if apt.categorie == 'Luxueux' %}
+                            {% if loop.index <= 5 %}
+                            <div class="apartment-item">
+                                <h4 class="apartment-title">{{ apt.titre }}</h4>
+                                <div class="apartment-price">{{ apt.prix }} FCFA</div>
+                                <div class="apartment-location">{{ apt.quartier }}, {{ apt.ville }}</div>
+                                <div class="apartment-views">{{ apt.popularite }} vues</div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Moyen -->
+                    <div class="category-box medium">
+                        <h3 class="category-title">Moyen</h3>
+                        <p class="price-range">350,000 - 1,500,000 FCFA</p>
+                        
+                        <div class="apartments-list">
+                            {% for apt in classification_results if apt.categorie == 'Moyen' %}
+                            {% if loop.index <= 5 %}
+                            <div class="apartment-item">
+                                <h4 class="apartment-title">{{ apt.titre }}</h4>
+                                <div class="apartment-price">{{ apt.prix }} FCFA</div>
+                                <div class="apartment-location">{{ apt.quartier }}, {{ apt.ville }}</div>
+                                <div class="apartment-views">{{ apt.popularite }} vues</div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Low Cost -->
+                    <div class="category-box lowcost">
+                        <h3 class="category-title">Low Cost</h3>
+                        <p class="price-range">≤350,000 FCFA</p>
+                        
+                        <div class="apartments-list">
+                            {% for apt in classification_results if apt.categorie == 'Low Cost' %}
+                            {% if loop.index <= 5 %}
+                            <div class="apartment-item">
+                                <h4 class="apartment-title">{{ apt.titre }}</h4>
+                                <div class="apartment-price">{{ apt.prix }} FCFA</div>
+                                <div class="apartment-location">{{ apt.quartier }}, {{ apt.ville }}</div>
+                                <div class="apartment-views">{{ apt.popularite }} vues</div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info w-100">
+                        <i class="fas fa-info-circle me-2"></i>Aucune donnée de classification disponible
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

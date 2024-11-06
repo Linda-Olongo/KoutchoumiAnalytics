@@ -1,0 +1,1061 @@
+/* ======================================
+   MIXINS POUR TEXTE DÉGRADÉ
+====================================== */
+/* Classe utilitaire pour le texte dégradé avec support multi-navigateurs */
+.gradient-text-mixin {
+    /* Solution de repli pour les navigateurs ne supportant pas le gradient */
+    color: var(--primary);
+    /* Gradient pour les navigateurs modernes */
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -ms-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    -ms-text-fill-color: transparent;
+}
+
+/* ======================================
+   VARIABLES GLOBALES
+====================================== */
+:root {
+    /* Couleurs principales */
+    --primary: #6366F1;
+    --primary-light: rgba(99, 102, 241, 0.1);
+    --primary-gradient-start: #4C52EA;
+    --primary-gradient-end: #8B5CF6;
+    
+    /* Couleurs d'état */
+    --success: #28a745;
+    --success-light: rgba(40, 167, 69, 0.1);
+    --warning: #ffc107;
+    --warning-light: rgba(255, 193, 7, 0.1);
+    
+    /* Dimensions */
+    --header-height: 70px;
+    --header-height-mobile: 60px;
+    --container-padding: 1.5rem;
+    --container-padding-mobile: 1rem;
+    
+    /* Transitions */
+    --transition-speed: 0.3s;
+}
+
+/* ======================================
+   STYLES DE BASE
+====================================== */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    padding-top: var(--header-height);
+}
+
+/* ======================================
+   STYLES DE NAVIGATION
+====================================== */
+/* Navbar principale */
+.navbar {
+    height: var(--header-height);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-speed) ease;
+    background-color: white;
+}
+
+/* Logo et marque */
+.brand-icon {
+    font-size: 1.75rem;
+    /* Application du mixin gradient */
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+}
+
+.brand-text {
+    line-height: 1.2;
+}
+
+.app-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    /* Application du mixin gradient */
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+}
+
+.app-subtitle {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* Titres avec dégradé */
+.gradient-title {
+    /* Solution de repli */
+    color: var(--primary);
+    /* Style dégradé */
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* ======================================
+   NAVIGATION ET LIENS
+====================================== */
+.nav-link {
+    position: relative;
+    color: #2d3748 !important;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    transition: all var(--transition-speed) ease;
+}
+
+.nav-link:hover {
+    color: var(--primary) !important;
+}
+
+.nav-link.active {
+    color: var(--primary) !important;
+}
+
+/* Pills de navigation */
+.nav-pills .nav-link {
+    color: #2d3748;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    transition: all var(--transition-speed) ease;
+    background: none;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: var(--primary-light);
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    color: white !important;
+    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+}
+
+/* ======================================
+   CARTES ET CONTENEURS
+====================================== */
+.card {
+    transition: transform var(--transition-speed) ease-in-out;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Stats Icon Styles */
+.stats-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.stats-icon-primary {
+    background-color: #EEF2FF;
+}
+.stats-icon-primary i {
+    color: var(--primary);
+}
+
+.stats-icon-success {
+    background-color: #ECFDF5;
+}
+.stats-icon-success i {
+    color: var(--success);
+}
+
+.stats-icon-warning {
+    background-color: #FFFBEB;
+}
+.stats-icon-warning i {
+    color: var(--warning);
+}
+
+
+
+/* ======================================
+   CONTENEUR DES GRAPHIQUES
+====================================== */
+/* Style du conteneur des graphiques */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Hauteur fixe pour maintenir la cohérence */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* Style des images de graphiques */
+.chart-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block; /* Élimine l'espace sous l'image */
+}
+
+
+/* ======================================
+   STYLES DES CARTES
+====================================== */
+/* Style général des cartes */
+.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Titre de la carte */
+.card-title {
+    margin-bottom: 1.5rem !important;
+}
+
+
+
+/* ======================================
+   OPTIMISATIONS POUR LES STATS CARDS
+====================================== */
+/* Alignement des cartes de statistiques */
+.stats-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0; /* Empêche l'icône de se rétrécir */
+}
+
+/* Assure que le conteneur principal prend toute la hauteur */
+.card-body .d-flex {
+    width: 100%;
+    height: 100%;
+}
+
+/* Style pour le conteneur des statistiques */
+.card-body .d-flex .d-flex {
+    align-items: center; /* Centre verticalement tout le contenu */
+}
+
+/* Styles pour le conteneur de texte */
+.card-body .d-flex .d-flex > div:last-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre verticalement le texte */
+}
+
+/* Ajustement des marges et espacements */
+.card-subtitle {
+    margin-bottom: 0.25rem !important; /* Réduit l'espace entre le titre et la valeur */
+}
+
+.card-title {
+    line-height: 1.2; /* Ajuste la hauteur de ligne pour un meilleur alignement */
+    margin-bottom: 0 !important; /* Supprime la marge du bas */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+    }
+}
+
+
+/* ======================================
+   RESPONSIVE DESIGN
+====================================== */
+@media (max-width: 992px) {
+    .chart-container {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        height: 250px;
+        padding: 0.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* ======================================
+   ANIMATIONS
+====================================== */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-in forwards;
+}
+
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/* ======================================
+  DATA
+====================================== */
+/* Layout & Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--container-padding);
+}
+
+/* Navigation Pills */
+/* Navigation Pills */
+.nav-pills-container {
+    max-width: 1200px; 
+    margin: 0 auto 2rem;
+}
+
+.nav-pills {
+    border-radius: 15px;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-pills .nav-link {
+    border-radius: 10px;
+    padding: 0.8rem 1.5rem;
+    transition: all var(--transition-speed);
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--primary-light);
+}
+
+.nav-pills .nav-link:not(.active):hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Formulaire de recommandation */
+.recommendation-form {
+    max-width: 1200px; 
+    margin: 0;
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-label i {
+    color: var(--primary);
+}
+
+/* Style du bouton de recherche */
+.search-button {
+    background: #4F46E5;
+    color: white;
+    border: none;
+    border-radius: 8px; /* Arrondi modéré au lieu de 9999px */
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: auto;
+    min-width: 200px;
+}
+
+.search-button:hover {
+    background: #4338CA;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Recommandations */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.apartment-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform var(--transition-speed);
+}
+
+.apartment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--primary-light);
+}
+
+.apartment-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.apartment-title {
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.apartment-info {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Points forts et attention */
+.points-section {
+    margin: 0 1rem 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.points-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.points-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.points-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+/* Score section */
+.score-section {
+    margin: 0 1rem 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--primary-light);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score-value {
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* Classification */
+.classification-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.categories-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.category-box {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all var(--transition-speed);
+}
+
+.category-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--primary-light);
+}
+
+.category-box.luxury {
+    border-left: 4px solid var(--primary);
+}
+
+.category-box.medium {
+    border-left: 4px solid var(--success);
+}
+
+.category-box.lowcost {
+    border-left: 4px solid var(--warning);
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.price-range {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Apartment items dans la classification */
+.apartment-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: all var(--transition-speed);
+}
+
+.apartment-item:hover {
+    transform: translateX(5px);
+    background: var(--primary-light);
+}
+
+.apartment-item:last-child {
+    margin-bottom: 0;
+}
+
+.apartment-item .apartment-title {
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.apartment-item .apartment-price {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.25rem;
+}
+
+.apartment-item .apartment-location {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.apartment-item .apartment-views {
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border: none;
+}
+
+.alert-success {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.alert-warning {
+    background: var(--warning-light);
+    color: var(--warning);
+}
+
+/* Titre avec gradient */
+.gradient-title {
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.hero-gradient-bar {
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    width: 100px;
+    margin: 0 auto 2rem;
+    border-radius: 2px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .recommendations-grid,
+    .categories-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .recommendations-grid,
+    .categories-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: var(--container-padding-mobile);
+    }
+
+    .nav-pills .nav-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    .card.recommendation-form {
+        padding: 1.5rem;
+    }
+    
+    .container {
+        padding: var(--container-padding-mobile);
+    }
+}
+
+/* Transitions */
+.tab-pane {
+    transition: opacity var(--transition-speed);
+}
+
+.tab-pane.fade {
+    opacity: 0;
+}
+
+.tab-pane.show {
+    opacity: 1;
+}
+
+
+
+
+/* ======================================
+   ABOUT
+====================================== */
+/* Base styles */
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header styles */
+.contact-header {
+    margin-bottom: 4rem;
+}
+
+.gradient-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #6366F1 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.gradient-bar {
+    height: 4px;
+    width: 80px;
+    background: linear-gradient(to right, #6366F1, #818cf8);
+    border-radius: 2px;
+}
+
+/* Card styles */
+.contact-card {
+    background: white;
+    border-radius: 1.25rem;
+    padding: 2rem;
+    height: 100%;
+    box-shadow: var(--card-shadow);
+}
+
+/* Icon title */
+.icon-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.icon-title i {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.icon-title h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+/* Content blocks */
+.content-block {
+    margin-bottom: 1.5rem;
+}
+
+.content-block:last-child {
+    margin-bottom: 0;
+}
+
+.content-block i {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.content-block h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Separator */
+.separator {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+/* Phone section */
+.phone-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.phone-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.phone-item i {
+    color: var(--primary-color);
+    width: 1.25rem;
+    font-size: 1.25rem;
+}
+
+.phone-item a {
+    color: var(--text-primary); /* Noir par défaut */
+}
+
+.phone-item a:hover {
+    color: var(--primary); /* Violet au survol */
+}
+
+/* Schedule section */
+.schedule-block {
+    margin-top: 1rem;
+}
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.schedule-header i {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.schedule-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.schedule-times {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.schedule-times span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Links */
+a {
+    color: var(--text-secondary); /* Couleur par défaut grise */
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+a:hover {
+    color: var(--primary); /* Utilisation de la variable globale */
+}
+
+/* Common text */
+span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Animation */
+.fade-up {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contact-card {
+        padding: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .gradient-title {
+        font-size: 2rem;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .icon-title h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-container {
+        padding: 1.5rem;
+    }
+    .contact-card {
+        padding: 1.5rem;
+    }
+}
+
+
+
+/* ======================================
+   FOOTER
+====================================== */
+footer {
+    background: white;
+    padding: 0.5rem 0; /* Padding minimal */
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    height: 50px; /* Hauteur fixe très réduite */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #6b7280;
+    font-size: 0.75rem; /* Police plus petite */
+    line-height: 1;
+}
+
+
+
+
+/* ======================================
+    RESPONSIVE DESIGN
+====================================== */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0.5rem var(--container-padding-mobile);
+    }
+
+    .navbar-collapse {
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: var(--header-height-mobile);
+    }
+
+    .navbar {
+        height: auto;
+        min-height: var(--header-height-mobile);
+    }
+
+    .card:hover {
+        transform: none;
+    }
+
+    .gradient-title {
+        font-size: 1.75rem;
+    }
+
+    .animate-slide-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --header-height: 60px;
+    }
+
+    .container {
+        padding-left: var(--container-padding-mobile);
+        padding-right: var(--container-padding-mobile);
+    }
+
+    .gradient-title {
+        font-size: 1.5rem;
+    }
+}
